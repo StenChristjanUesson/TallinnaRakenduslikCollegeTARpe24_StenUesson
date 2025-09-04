@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using TallinnaRakenduslikCollegeTARpe24_StenUesson.Data;
+
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson
 {
     public class Program
@@ -8,6 +11,9 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer
+             (builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             var app = builder.Build();
 
