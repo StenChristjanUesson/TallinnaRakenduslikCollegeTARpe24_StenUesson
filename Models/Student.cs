@@ -12,7 +12,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
         public DateTime EnrollmentDate { get; set; }
         public ICollection<Enrollment>? Enrollments { get; set; }
         public string Gender { get; set; }
-        public int? age { get; set; }
-        public string? Main_Language { get; set; }
+        public int? Age { get; set; }
+        public string? MainLanguage { get; set; }
     }
 }
