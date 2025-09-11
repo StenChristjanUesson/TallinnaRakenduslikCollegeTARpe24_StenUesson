@@ -12,7 +12,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
                 return;
             }
 
-            var Students = new Student[]
+            var students = new Student[]
             {
                 new Student
                 {
