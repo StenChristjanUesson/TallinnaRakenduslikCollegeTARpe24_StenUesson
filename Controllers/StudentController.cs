@@ -99,6 +99,34 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
             return View(student);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> BaseOn(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
+                return NotFound();
+
+            var clonedStudent = new Student
+            {
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                EnrollmentDate = student.EnrollmentDate,
+                Gender = student.Gender,
+                Age = student.Age,
+                MainLanguage = student.MainLanguage
+            };
+
+            clonedStudent.Id = 0;
+
+            _context.Students.Add(clonedStudent);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
