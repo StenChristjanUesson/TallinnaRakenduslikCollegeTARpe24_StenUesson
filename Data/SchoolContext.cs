@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Reflection.Emit;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 using TallinnaRakenduslikCollegeTARpe24_StenUesson.Models;
 
@@ -12,12 +13,16 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuider) 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            modelBuider.Entity<Course>().ToTable("Course");
-            modelBuider.Entity<Student>().ToTable("Student");
-            modelBuider.Entity<Enrollment>().ToTable("Enrollment");
+            modelBuilder.Entity<Course>().ToTable("Course");
+            modelBuilder.Entity<Student>().ToTable("Student");
+            modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
+            modelBuilder.Entity<Instructor>().ToTable("Instructors");
+            modelBuilder.Entity<OfficeAssignment>().ToTable("OfficeAssignments");
         }
     }
 }
