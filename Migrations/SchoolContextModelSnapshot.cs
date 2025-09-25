@@ -87,8 +87,8 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     b.Property<int?>("InstructorID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MonthlyRevenue")
-                        .HasColumnType("int");
+                    b.Property<decimal>("MonthlyRevenue")
+                        .HasColumnType("Revenue");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -222,7 +222,6 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")

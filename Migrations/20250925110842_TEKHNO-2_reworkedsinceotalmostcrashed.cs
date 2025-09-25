@@ -5,7 +5,7 @@
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 {
     /// <inheritdoc />
-    public partial class TryingToFixIt : Migration
+    public partial class TEKHNO2_reworkedsinceotalmostcrashed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

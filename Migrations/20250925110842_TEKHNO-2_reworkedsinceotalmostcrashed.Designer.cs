@@ -12,8 +12,8 @@ using TallinnaRakenduslikCollegeTARpe24_StenUesson.Data;
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20250917100937_MigrationUpdate2")]
-    partial class MigrationUpdate2
+    [Migration("20250925110842_TEKHNO-2_reworkedsinceotalmostcrashed")]
+    partial class TEKHNO2_reworkedsinceotalmostcrashed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,11 +36,16 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     b.Property<int>("Credits")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DepartmentID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourseID");
+
+                    b.HasIndex("DepartmentID");
 
                     b.ToTable("Course", (string)null);
                 });
@@ -66,6 +71,49 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     b.HasIndex("InstructorID");
 
                     b.ToTable("CourseAssignment");
+                });
+
+            modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Department", b =>
+                {
+                    b.Property<int>("DepartmentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentID"));
+
+                    b.Property<decimal>("Budget")
+                        .HasColumnType("Money");
+
+                    b.Property<string>("DepartmentDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("InstructorID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MonthlyRevenue")
+                        .HasColumnType("Revenue");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Personality")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte?>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("DepartmentID");
+
+                    b.HasIndex("InstructorID");
+
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Enrollment", b =>
@@ -177,7 +225,6 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -190,6 +237,13 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Student", (string)null);
+                });
+
+            modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Course", b =>
+                {
+                    b.HasOne("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Department", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("DepartmentID");
                 });
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.CourseAssignment", b =>
@@ -209,6 +263,15 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Department", b =>
+                {
+                    b.HasOne("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Instructor", "Administrator")
+                        .WithMany()
+                        .HasForeignKey("InstructorID");
+
+                    b.Navigation("Administrator");
                 });
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Enrollment", b =>
@@ -244,6 +307,11 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Course", b =>
                 {
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Department", b =>
+                {
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Instructor", b =>

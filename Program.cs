@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using TallinnaRakenduslikCollegeTARpe24_StenUesson.Data;
 
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson
@@ -16,6 +17,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             var app = builder.Build();
+            CreateDbIFNotExists(app);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -38,5 +40,23 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson
 
             app.Run();
         }
+        private static void CreateDbIFNotExists(IHost app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetService<SchoolContext>();
+                    DbInitializer.Initializer(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetService<ILogger<Program>>();
+                    logger.LogError(ex, "Error occured on creatign DB");
+                    throw;
+                }
+            }
+        } 
     }
 }

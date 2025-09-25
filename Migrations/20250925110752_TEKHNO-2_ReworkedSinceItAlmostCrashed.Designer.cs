@@ -12,8 +12,8 @@ using TallinnaRakenduslikCollegeTARpe24_StenUesson.Data;
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20250924101514_Tekno1-Remeber")]
-    partial class Tekno1Remeber
+    [Migration("20250925110752_TEKHNO-2_ReworkedSinceItAlmostCrashed")]
+    partial class TEKHNO2_ReworkedSinceItAlmostCrashed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,8 +90,8 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     b.Property<int?>("InstructorID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MonthlyRevenue")
-                        .HasColumnType("int");
+                    b.Property<decimal>("MonthlyRevenue")
+                        .HasColumnType("Revenue");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -225,7 +225,6 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")

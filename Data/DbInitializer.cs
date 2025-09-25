@@ -6,6 +6,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
     {
         public static void Initializer(SchoolContext context)
         {
+
             context.Database.EnsureCreated();
             if (context.Students.Any())
             {
@@ -14,16 +15,16 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
 
             var students = new Student[]
             {
-                new Student{FirstName="Artjom", LastName="Skatškov", EnrollmentDate=DateTime.Parse("2069-04-20")},
-                new Student{FirstName="Meredith", LastName="Alonso", EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstName="Arturo",LastName="Anand", EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstName="Gytis",LastName="Barzdukas", EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstName="Yan",LastName="Li", EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstName="Peggy",LastName="Justice", EnrollmentDate=DateTime.Parse("2001-09-01")},
-                new Student{FirstName="Laura",LastName="Norman", EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstName="Nino",LastName="Olivetto", EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstName="Carson",LastName="Alexander", EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstName="Mikk",LastName="Kivisild", EnrollmentDate=DateTime.Parse("2727-07-27")}
+                new Student{FirstName="Artjom", LastName="Skatškov", Gender="Mees", EnrollmentDate=DateTime.Parse("2069-04-20")},
+                new Student{FirstName="Meredith", LastName="Alonso", Gender="Naine", EnrollmentDate=DateTime.Parse("2002-09-01")},
+                new Student{FirstName="Arturo",LastName="Anand", Gender = "Mees", EnrollmentDate=DateTime.Parse("2003-09-01")},
+                new Student{FirstName="Gytis",LastName="Barzdukas", Gender="Mees", EnrollmentDate=DateTime.Parse("2002-09-01")},
+                new Student{FirstName="Yan",LastName="Li", Gender="Mees", EnrollmentDate=DateTime.Parse("2002-09-01")},
+                new Student{FirstName="Peggy",LastName="Justice", Gender = "Naine", EnrollmentDate=DateTime.Parse("2001-09-01")},
+                new Student{FirstName="Laura",LastName="Norman", Gender = "Naine", EnrollmentDate=DateTime.Parse("2003-09-01")},
+                new Student{FirstName="Nino",LastName="Olivetto", Gender = "Mees", EnrollmentDate=DateTime.Parse("2005-09-01")},
+                new Student{FirstName="Carson",LastName="Alexander", Gender = "Mees", EnrollmentDate=DateTime.Parse("2005-09-01")},
+                new Student{FirstName="Mikk",LastName="Kivisild", Gender = "Mees", EnrollmentDate=DateTime.Parse("2727-07-27")}
             };
             //iga õpilane lisatakse ükshaaval läbi foreach tsükli
             foreach (Student student in students)
@@ -91,6 +92,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
                 {
                     LastName = "AAA",
                     FirstName = "EE",
+                    City = "Tallinn",
                     HireDate = DateTime.Now
                     //VocationalCredentials=""
                 },
@@ -98,6 +100,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
                 {
                     LastName = "SES",
                     FirstName = "NED",
+                    City = "Tallinn",
                     HireDate = DateTime.Now,
                     //VocationalCredentials=""
                 },
@@ -105,6 +108,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
                 {
                     LastName = "Parker",
                     FirstName = "Peter",
+                    City = "Tallinn",
                     HireDate = DateTime.Now,
                     //VocationalCredentials=""
                 },
@@ -122,6 +126,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
                     Budget = 0,
                     StartDate = DateTime.Parse("2024-09-01"),
                     DepartmentDescription = "Money Grubbers",
+                    MonthlyRevenue = 0,
                     InstructorID = 1
                 },
                 new Department
@@ -130,6 +135,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
                     Budget = 0,
                     StartDate = DateTime.Parse("2024-04-09"),
                     DepartmentDescription = "Those who read between lines",
+                    MonthlyRevenue = 0,
                     InstructorID = 2
                 },
                 new Department
@@ -137,7 +143,9 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
                     Name = "Department of PR",
                     Budget = 0,
                     StartDate = DateTime.Parse("2024-02-03"),
-                    DepartmentDescription = "Look at How Fabulous we are!"
+                    DepartmentDescription = "Look at How Fabulous we are!",
+                    MonthlyRevenue = 0,
+                    InstructorID = 3
                 }
             };
             context.Departments.AddRange(departments);

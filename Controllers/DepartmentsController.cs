@@ -144,25 +144,25 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
             return View(departmentToUpdate);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> BaseOn(int? id)
-        {
-            var department = _context.Departments.Find(id);
-            return View(department);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> BaseOn(int? id)
+        //{
+        //    var department = _context.Departments.Find(id);
+        //    return View(department);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> BaseOn(Department department)
-        {
-            if (ModelState.IsValid)
-            {
-                var baseonDepartment = department;
-                _context.Departments.Add(baseonDepartment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(department);
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> BaseOn(Department department)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var baseonDepartment = department;
+        //        _context.Departments.Add(baseonDepartment);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(department);
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

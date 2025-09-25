@@ -19,7 +19,9 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
         public string? DepartmentDescription { get; set; }
         [Display(Name = "This Departments are:")]
         public string? Personality { get; set; }
-        public int? MonthlyRevenue { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "Revenue")]
+        public decimal MonthlyRevenue { get; set; }
         public int? InstructorID { get; set; }
         [Timestamp]
         public byte? RowVersion { get; set; }

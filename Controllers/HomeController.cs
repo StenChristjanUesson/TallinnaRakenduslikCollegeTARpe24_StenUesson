@@ -21,6 +21,11 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }        
+        public IActionResult Privacy2()
+        {
+            ViewData["Värv"] = "Roheline";
+            return View("Privacy","Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

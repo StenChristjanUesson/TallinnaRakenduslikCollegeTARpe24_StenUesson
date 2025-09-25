@@ -2,7 +2,6 @@
 
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
 {
-
     public class Student
     {
         [Key]
@@ -11,7 +10,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
         public string LastName { get; set; }
         public DateTime EnrollmentDate { get; set; }
         public ICollection<Enrollment>? Enrollments { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public int? Age { get; set; }
         public string? MainLanguage { get; set; }
     }
