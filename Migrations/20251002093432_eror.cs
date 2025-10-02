@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 {
     /// <inheritdoc />
-    public partial class TEKHNO2_ReworkedSinceItAlmostCrashed : Migration
+    public partial class eror : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,11 +66,11 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     DepartmentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Budget = table.Column<decimal>(type: "Money", nullable: false),
+                    Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DepartmentDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Personality = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MonthlyRevenue = table.Column<decimal>(type: "Revenue", nullable: false),
+                    MonthlyRevenue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     InstructorID = table.Column<int>(type: "int", nullable: true),
                     RowVersion = table.Column<byte>(type: "tinyint", rowVersion: true, nullable: true)
                 },

@@ -12,8 +12,8 @@ using TallinnaRakenduslikCollegeTARpe24_StenUesson.Data;
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20250925110842_TEKHNO-2_reworkedsinceotalmostcrashed")]
-    partial class TEKHNO2_reworkedsinceotalmostcrashed
+    [Migration("20251002093432_eror")]
+    partial class eror
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,7 +70,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 
                     b.HasIndex("InstructorID");
 
-                    b.ToTable("CourseAssignment");
+                    b.ToTable("CourseAssignment", (string)null);
                 });
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Department", b =>
@@ -82,7 +82,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentID"));
 
                     b.Property<decimal>("Budget")
-                        .HasColumnType("Money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("DepartmentDescription")
                         .HasColumnType("nvarchar(max)");
@@ -91,7 +91,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("MonthlyRevenue")
-                        .HasColumnType("Revenue");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -241,15 +241,17 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Course", b =>
                 {
-                    b.HasOne("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Department", null)
+                    b.HasOne("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Department", "Department")
                         .WithMany("Courses")
                         .HasForeignKey("DepartmentID");
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.CourseAssignment", b =>
                 {
                     b.HasOne("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("CourseAssignments")
                         .HasForeignKey("CourseID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -295,17 +297,17 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Migrations
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.OfficeAssignment", b =>
                 {
-                    b.HasOne("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Instructor", "Instructor")
+                    b.HasOne("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Instructor", null)
                         .WithOne("OfficeAssignment")
                         .HasForeignKey("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.OfficeAssignment", "InstructorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Instructor");
                 });
 
             modelBuilder.Entity("TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Course", b =>
                 {
+                    b.Navigation("CourseAssignments");
+
                     b.Navigation("Enrollments");
                 });
 

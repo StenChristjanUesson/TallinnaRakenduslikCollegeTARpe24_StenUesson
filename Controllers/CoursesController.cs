@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TallinnaRakenduslikCollegeTARpe24_StenUesson.Data;
 using TallinnaRakenduslikCollegeTARpe24_StenUesson.Models;
@@ -14,115 +15,72 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
         }
         public IActionResult Index()
         {
-            var courses = _context.Courses.Include(c => c.Department).AsNoTracking();
-            return View();
+            var courses = _context.Courses.Include(c => c.Department)
+                .AsNoTracking();
+            return View(courses);
         }
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["RequestedView"] = "Create";
-            return View("CreateEdit");
-        }
+            PopulateDepartmentsDropDownList();
 
+            return View();
+
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseID,Title,Credits")] Course course)
-        {
-            ModelState.Remove("CourseID");
-            int lastid = await _context.Courses.CountAsync();
-            course.CourseID += lastid++;
-            if (ModelState.IsValid)
-            {
-
-                _context.Courses.Add(course);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View("Index");
-        }
-        //Edit controller
-        [HttpGet]
-        public IActionResult Edit([Bind("CourseID,Title,Credits")] int? id)
-        {
-            ViewData["RequestedView"] = "Edit";
-            Course course = _context.Courses.Find(id);
-            return View("CreateEdit");
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit([Bind("CourseID,Title,Credits")] Course course)
+        public async Task<IActionResult> Create(Course course)
         {
             if (ModelState.IsValid)
             {
-                _context.Courses.Update(course);
+                _context.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //PopulateDepartmentsDropDownList(course.DepartmentID);
             }
-            return View("CreateEdit", course);
-        }
-        //Clone controller
-        public async Task<ActionResult> Clone(int? id, Course course)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var Course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
-
-            var CourseClone = new Course();
-            CourseClone.Credits = Course.Credits;
-            CourseClone.Title = Course.Title;
-            ModelState.Remove("CourseID");
-            if (ModelState.IsValid)
-            {
-                _context.Courses.Add(CourseClone);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
-        //Details controller
-        public async Task<IActionResult> Details(int? id)
-        {
-            ViewData["RequestedView"] = "Details";
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
-            if (course == null)
-            {
-                return NotFound();
-            }
-            return View("DetailsDelete", course);
-        }
-
-        //Delete controller
-        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            ViewData["RequestedView"] = "Delete";
-            if (id == null)
+            if (id == null || _context.Courses == null)
             {
                 return NotFound();
             }
-
-            var course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
-            if (course == null)
+            var courses = await _context.Courses
+                .Include(c => c.Department)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(mbox => mbox.CourseID == id);
+            if (courses == null)
             {
                 return NotFound();
             }
-            return View("DetailsDelete", course);
+            return View(courses);
         }
-
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_context.Courses == null)
+            {
+                return NotFound();
+            }
             var course = await _context.Courses.FindAsync(id);
-            _context.Courses.Remove(course);
+            if (course != null)
+            {
+                _context.Courses.Remove(course);
+            }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
+
+
+        private void PopulateDepartmentsDropDownList(object selectedDepartment = null)
+        {
+            var departmentsQuery = from d in _context.Departments
+                                   orderby d.Name
+                                   select d;
+            ViewBag.DepartmentID = new SelectList(departmentsQuery.AsNoTracking(), "DepartmentID", "Name", selectedDepartment);
+        }
+
     }
 }

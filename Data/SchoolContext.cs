@@ -12,9 +12,9 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<Image> Images { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
+        public DbSet<CourseAssignment> CourseAssignments { get; set; }
         public DbSet<Department> Departments { get; set; }
 
 
@@ -25,6 +25,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Data
             modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
             modelBuilder.Entity<Instructor>().ToTable("Instructors");
             modelBuilder.Entity<OfficeAssignment>().ToTable("OfficeAssignments");
+            modelBuilder.Entity<CourseAssignment>().ToTable("CourseAssignment");
             modelBuilder.Entity<Department>().ToTable("Departments");
         }
     }

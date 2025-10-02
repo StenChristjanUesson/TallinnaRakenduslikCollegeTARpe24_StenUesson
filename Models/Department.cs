@@ -10,7 +10,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
         [DataType(DataType.Currency)]
-        [Column(TypeName = "Money")]
+        [Display(Name = "Money")]
         public decimal Budget { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -19,8 +19,8 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
         public string? DepartmentDescription { get; set; }
         [Display(Name = "This Departments are:")]
         public string? Personality { get; set; }
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "Revenue")]
+
+        [Display(Name = "Revenue")]
         public decimal MonthlyRevenue { get; set; }
         public int? InstructorID { get; set; }
         [Timestamp]

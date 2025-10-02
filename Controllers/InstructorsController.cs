@@ -17,36 +17,35 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
         {
             var vm = new InstructorIndexData();
             vm.Instructors = await _context.Instructors
-                .Include(i => i.OfficeAssignment)
-                .Include(i => i.CourseAssignments)
-                .ThenInclude(i => i.Course)
-                .ThenInclude(i => i.Enrollments)
-                .ThenInclude(i => i.Student)
-                .Include(i => i.CourseAssignments)
-                .ThenInclude(i => i.Course)
-                .AsNoTracking()
-                .OrderBy(i => i.LastName)
-                .ToListAsync();
-
-            if (id != null)
-            {
-                ViewData["InstructorID"] = id.Value;
-                Instructor instructor = vm.Instructors
-                    .Where(i => i.ID == id.Value).Single();
-                vm.Courses = instructor.CourseAssignments
-                    .Select(i => i.Course);
-            }
-            if (courseId != null)
-            {
-                ViewData["CourseID"] = courseId.Value;
-                vm.Enrollments = vm.Courses
-                    .Where(x => x.CourseID == courseId)
-                    .Single()
-                    .Enrollments;
-            }
-
+            .Include(i => i.OfficeAssignment)
+            .Include(i => i.CourseAssignments)
+            .ToListAsync();
             return View(vm);
 
+        }
+        [HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            var teacher = await _context.Instructors.FindAsync(id);
+            return View(teacher);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var teacher = await _context.Instructors.FindAsync(id);
+            return View(teacher);
+        }
+        [HttpPost, ActionName("Edit")]
+        public async Task<IActionResult> EditConfirmed([Bind("Id, LastName,FirstName,Email,HireDate,City,Age,Gender")] Instructor teacher)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Instructors.Update(teacher);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(teacher);
         }
         [HttpGet]
         public IActionResult Create()
@@ -57,112 +56,76 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Instructor instructor)
+        public async Task<IActionResult> Create(Instructor instructor, string selectedCourses)
         {
+            if (selectedCourses != null)
+            {
+                instructor.CourseAssignments = new List<CourseAssignment>();
+                foreach (var course in selectedCourses)
+                {
+                    var courseToAdd = new CourseAssignment
+                    {
+                        InstructorID = instructor.ID,
+                        CourseID = course
+
+                    };
+                    instructor.CourseAssignments.Add(courseToAdd);
+                }
+            }
+            ModelState.Remove("selectedCourses");
             if (ModelState.IsValid)
             {
                 _context.Add(instructor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
+
             }
-            PopulateAssignedCourseData(instructor);
+            //PopulateAssignedCourseData(instructor);
             return View(instructor);
         }
-
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var instructor = await _context.Instructors
-                .FirstOrDefaultAsync(m => m.ID == id);
-
-            if (instructor == null)
+            var deletableInstructor = await _context.Instructors
+                .FirstOrDefaultAsync(s => s.ID == id);
+            if (deletableInstructor == null)
             {
                 return NotFound();
             }
-            return View(instructor);
-        }
-
-
-        public async Task<ActionResult> Edit([Bind("ID,LastName,FirstName,HireDate,City")] Instructor Instructor)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Instructors.Update(Instructor);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(Instructor);
-        }
-
-
-        public async Task<ActionResult> Clone(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var Instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
-
-            var InstructorClone = new Instructor();
-            InstructorClone.LastName = Instructor.LastName;
-            InstructorClone.FirstName = Instructor.FirstName;
-            InstructorClone.HireDate = Instructor.HireDate;
-            InstructorClone.City = Instructor.City;
-
-
-
-            if (ModelState.IsValid)
-            {
-                _context.Instructors.Add(InstructorClone);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var instructor = await _context.Instructors
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (instructor == null)
-            {
-                return NotFound();
-            }
-            return View(instructor);
+            return View(deletableInstructor);
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var instructor = await _context.Instructors.FindAsync(id);
-            _context.Instructors.Remove(instructor);
+            Instructor deletableinstructor = await _context.Instructors
+                .SingleAsync(i => i.ID == id);
+            _context.Instructors.Remove(deletableinstructor);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
-
 
         private void PopulateAssignedCourseData(Instructor instructor)
         {
-            var allCourses = _context.Courses;
-            var instructorCourses = new HashSet<int>(collection: instructor.CourseAssignments.Select(c => c.CourseID));
+            var allcourses = _context.Courses;
+            var instructorCourses = new HashSet<int>(instructor.CourseAssignments.Select(c => c.CourseID));
             var vm = new List<AssignedCourseData>();
-            foreach (var course in allCourses)
+            foreach (var course in allcourses)
             {
                 vm.Add(new AssignedCourseData
                 {
                     CourseID = course.CourseID,
                     Title = course.Title,
                     Assigned = instructorCourses.Contains(course.CourseID)
+
                 });
             }
             ViewData["Courses"] = vm;
+
         }
     }
 }
