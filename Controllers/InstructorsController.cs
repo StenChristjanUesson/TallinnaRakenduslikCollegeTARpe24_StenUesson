@@ -24,7 +24,6 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
 
         }
         [HttpGet]
-        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             var teacher = await _context.Instructors.FindAsync(id);
