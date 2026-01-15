@@ -12,29 +12,37 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="from-group">
-                <label asp-for="CourseID" class="control-label"></label>
-                <input asp-for="CourseID" class="form-control">
-                <span asp-validation-for="CourseID" class="text-danger"></span>
+                <label asp-for="DelinquentID" class="control-label"></label>
+                <input asp-for="DelinquentID" class="form-control">
+                <span asp-validation-for="DelinquentID" class="text-danger"></span>
             </div>
 
             <div class="from-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control">
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
 
             <div class="from-group">
-                <label asp-for="Credits" class="control-label"></label>
-                <input asp-for="Credits" class="form-control">
-                <span asp-validation-for="Credits" class="text-danger"></span>
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control">
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
 
             <div class="from-group">
-                <label asp-for="Department" class="control-label"></label>
-                <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentID">
+                <label asp-for="teacherOrStudent" class="control-label"></label>
+                <select asp-for="teacherOrStudent" class="form-control" asp-items="ViewBag.DelinquentID">
                     <option value="" class="form-control"> --Vali osakond--</option>
                 </select>
-                <span asp-validation-for="DepartmentID" class="text-danger"></span>
+                <span asp-validation-for="teacherOrStudent" class="text-danger"></span>
+            </div>
+
+            <div class="from-group">
+                <label asp-for="violtaions" class="control-label"></label>
+                <select asp-for="violtaions" class="form-control" asp-items="ViewBag.DelinquentID">
+                    <option value="" class="form-control"> --Vali osakond--</option>
+                </select>
+                <span asp-validation-for="violtaions" class="text-danger"></span>
             </div>
 
             <div class="form-group">

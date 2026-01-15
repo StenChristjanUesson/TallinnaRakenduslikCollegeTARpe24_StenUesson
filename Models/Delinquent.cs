@@ -2,6 +2,15 @@
 
 namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
 {
+    public enum Violtaions
+    {
+        Truancy, KoduvalveRikkumised, AlaealisteTarvitamine, Põgenemine, Kontrollimatus, VaraKuriteod, Narkokuriteod, RünnakJaPõrutus, SissetungJaRöövimine, Vandalism
+    }
+
+    public enum TeacherOrStudent
+    {
+        Õpilane, Õpetaja
+    }
     public class Delinquent
     {
         [Key]
@@ -11,15 +20,5 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Models
         public Violtaions violtaions { get; set; }
         public TeacherOrStudent teacherOrStudent { get; set; }
         public string? ViolationDescription { get; set; }
-
-        public enum Violtaions
-        {
-            Truancy, KoduvalveRikkumised, AlaealisteTarvitamine, Põgenemine, Kontrollimatus, VaraKuriteod, Narkokuriteod, RünnakJaPõrutus, SissetungJaRöövimine, Vandalism
-        }
-
-        public enum TeacherOrStudent 
-        { 
-            Õpilane, Õpetaja
-        }
     }
 }
