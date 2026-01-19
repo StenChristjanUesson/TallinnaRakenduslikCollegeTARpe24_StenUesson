@@ -1,0 +1,56 @@
+﻿@model TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Delinquent
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<h3>Delinquent details</h3>
+<div>
+    <h4>Delinquents</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.LastName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.FirstName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.teacherOrStudent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.teacherOrStudent)
+        </dd>
+
+        <dt>
+            @{
+                if (Model.violtaions != null)
+                {
+                    @Html.DisplayNameFor(model => model.violtaions)
+                    @Html.DisplayFor(Model => Model.violtaions)
+                }
+            }
+        </dt>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.ViolationDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.ViolationDescription)
+        </dd>
+
+    </dl>
+    <form asp-action="Details">
+        <a asp-action="Index">Back To list</a> | <a asp-action="Edit">Edit</a>
+    </form>
+</div>
