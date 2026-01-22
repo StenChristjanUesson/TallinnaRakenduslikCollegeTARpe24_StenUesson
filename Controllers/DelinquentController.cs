@@ -59,8 +59,7 @@ namespace TallinnaRakenduslikCollegeTARpe24_StenUesson.Controllers
             {
                 return NotFound();
             }
-
-            var delinquent = await _context.Delinquents.FindAsync(id);
+            var delinquent = await _context.Delinquents.FirstOrDefaultAsync(d => d.DelinquentID == id);
             if (delinquent == null)
             {
                 return NotFound();
