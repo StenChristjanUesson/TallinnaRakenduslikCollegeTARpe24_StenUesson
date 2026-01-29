@@ -1,7 +1,7 @@
 ﻿@model TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Delinquent
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delinquent Details";
 }
 
 <h1>Details</h1>
@@ -38,19 +38,15 @@
                 {
                     @Html.DisplayNameFor(model => model.violtaions)
                     @Html.DisplayFor(Model => Model.violtaions)
+                    <br />
+                    @Html.DisplayNameFor(Model => Model.ViolationDescription)
+                    @Html.DisplayFor(Model => Model.ViolationDescription)
                 }
             }
-        </dt>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(Model => Model.ViolationDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(Model => Model.ViolationDescription)
-        </dd>
+        </dt>        
 
     </dl>
-    <form asp-action="Details">
+    <form asp-action="Back">
         <a asp-action="Index">Back To list</a> | <a asp-action="Edit">Edit</a>
     </form>
 </div>

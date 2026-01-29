@@ -1,38 +1,29 @@
 ﻿@model TallinnaRakenduslikCollegeTARpe24_StenUesson.Models.Delinquent
 
 @{
-    ViewData["Title"] = "Delete";
+	ViewData["Title"] = "Delete Delinquent";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure about that</h3>
+<h1>Kustuta Delinquent</h1>
+<h3>
+	Kas oled kindel et tahad kustudada @Html.DisplayFor(Model => Model.FirstName)
+</h3>
 <div>
-    <h4>Delinquent</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.LastName)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.LastName)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.FirstName)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.FirstName)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.violtaions)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.violtaions)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.ViolationDescription)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.ViolationDescription)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.teacherOrStudent)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.teacherOrStudent)</dd>
-        @* need to fix this and most of the programm due to updates *@
-        @*         <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.LastName)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.LastName)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.FirstName)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.FirstName)</dd>
-        <dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.HireDate)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(Model => Model.HireDate)</dd> *@
+	<h4>Delinquent</h4>
+	<hr />
+	<dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.LastName)</dt>
+	<dt class="col-sm-2">@Html.DisplayFor(Model => Model.LastName)</dt>
+	<dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.FirstName)</dt>
+	<dt class="col-sm-2">@Html.DisplayFor(Model => Model.FirstName)</dt>
+	<dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.violtaions)</dt>
+	<dt class="col-sm-2">@Html.DisplayFor(Model => Model.violtaions)</dt>
+	<dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.ViolationDescription)</dt>
+	<dt class="col-sm-2">@Html.DisplayFor(Model => Model.ViolationDescription)</dt>
+	<dt class="col-sm-2">@Html.DisplayNameFor(Model => Model.teacherOrStudent)</dt>
+	<dt class="col-sm-2">@Html.DisplayFor(Model => Model.teacherOrStudent)</dt>
 
-    </dl>
-
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="DelinquentID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> | <a asp-action="Index">Cancel</a>
-    </form>
+	<form asp-action="Delete">
+		<input type="hidden" asp-for="DelinquentID" />
+		<input type="submit" value="Kustuta Delinquent" class="btn btn-danger" /> | <a asp-action="Index">Tühista</a>
+	</form>
 </div>
